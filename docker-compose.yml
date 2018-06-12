@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+    api:
+        build: ./docker-files/api
+        container_name: api_ads
+        environment:
+            - XDEBUG_HOST=${XDEBUG_HOST}
+            - XDEBUG_PORT=${XDEBUG_PORT}
+            - XDEBUG_IDE_KEY=${XDEBUG_IDE_KEY}
+        depends_on:
+            - mysql
+            - redis
+            - rabbitmq
+            - mailcatcher
+        volumes:
+            - .:/var/www
+        ports:
+             - 8000:80
+
+    mysql:
+        image: mysql:5.7
+        container_name: mysql_ads
+        ports:
+            - "3306:3306"
+        volumes:
+            - /var/lib/mysql
+
+    rabbitmq:
+        container_name: rabbitmq_ads
+        image: richbrains/rabbitmq-delayed-management
+        volumes:
+            - ./docker-files/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config
+        ports:
+            - 5672:5672
+            - 15672:15672
+
+    redis:
+        container_name: redis_ads
+        image: redis:3.2
+        ports:
+            - 6379:6379
+
+    mailcatcher:
+        image: yappabe/mailcatcher
+        container_name: mailcatcher_ads
+        ports:
+            - 1025:1025
+            - 1080:1080
