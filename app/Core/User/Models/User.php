@@ -1,10 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Core\User\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * App\Core\User\Models\User
+ *
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use Notifiable;
