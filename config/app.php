@@ -152,6 +152,11 @@ return [
          */
 
         /*
+         * Core Service Providers...
+         */
+        App\Core\User\Providers\UserServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
