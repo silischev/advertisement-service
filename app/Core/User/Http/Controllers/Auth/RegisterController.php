@@ -33,19 +33,10 @@ class RegisterController extends Controller
         return view('user.auth.register');
     }
 
-    public function register(RegisterRequest $request, AuthService $authService)
+    public function register(RegisterRequest $request)
     {
         $this->authService->register($request);
 
         //return response('', Response::HTTP_CREATED);
-    }
-
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
     }
 }
