@@ -50,6 +50,7 @@ class AuthService
 
     /**
      * @param RegisterRequest $request
+     * @param string $role
      *
      * @return User
      */

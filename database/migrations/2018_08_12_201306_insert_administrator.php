@@ -9,12 +9,15 @@ class InsertAdministrator extends Migration
 {
     public function up()
     {
+        // TODO
+
         $service = new AuthService();
-        $service->create(env('ADMIN_NAME'), env('ADMIN_EMAIL'), env('ADMIN_PASSWORD'), User::ROLE_ADMINISTRATOR);
+        $service->createByAdmin(env('ADMIN_NAME'), env('ADMIN_EMAIL'), env('ADMIN_PASSWORD'), User::ROLE_ADMINISTRATOR);
     }
 
     public function down()
     {
+        // TODO
         $service = new AuthService();
     }
 }
