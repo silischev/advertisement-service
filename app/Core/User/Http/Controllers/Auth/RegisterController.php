@@ -3,12 +3,8 @@
 namespace App\Core\User\Http\Controllers\Auth;
 
 use App\Core\User\Http\Requests\Auth\RegisterRequest;
-use App\Core\User\Models\User;
 use App\Core\User\Services\AuthService;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -35,8 +31,10 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $this->authService->register($request);
+        $user = $this->authService->register($request);
 
-        //return response('', Response::HTTP_CREATED);
+        $this->guard()->login($user);
+
+        return redirect($this->redirectTo);
     }
 }
