@@ -2,6 +2,7 @@
 
 namespace App\Core\User\Services;
 
+use App\Core\User\Http\Requests\Auth\AdminRegisterRequest;
 use App\Core\User\Http\Requests\Auth\LoginRequest;
 use App\Core\User\Http\Requests\Auth\RegisterRequest;
 use App\Core\User\Models\User;
@@ -13,7 +14,7 @@ class AuthService
     use AuthenticatesUsers;
 
     /**
-     * Register new user
+     * Register new user via site form
      *
      * @param RegisterRequest $request
      *
@@ -24,6 +25,11 @@ class AuthService
         // @TODO send mail
 
         return $this->createUser($request);
+    }
+
+    public function createByAdmin(AdminRegisterRequest $request)
+    {
+        $this->createByAdmin($request);
     }
 
     /**
@@ -47,7 +53,7 @@ class AuthService
      *
      * @return User
      */
-    private function createUser(RegisterRequest $request): User
+    private function createUser(RegisterRequest $request, string $role = User::ROLE_USER): User
     {
         return User::create([
             'name' => $request->get('name'),
