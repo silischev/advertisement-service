@@ -14,22 +14,37 @@ class AuthService
     use AuthenticatesUsers;
 
     /**
-     * Register new user via site form
+     * @var UserRoleService
+     */
+    private $userRoleService;
+
+    /**
+     * AuthService constructor.
      *
-     * @param RegisterRequest $request
+     * @param UserRoleService $userRoleService
+     */
+    public function __construct(UserRoleService $userRoleService)
+    {
+        $this->userRoleService = $userRoleService;
+    }
+
+    /**
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @param string $roleName
      *
      * @return User
      */
-    public function register(RegisterRequest $request)
+    public function register(string $name, string $email, string $password, string $roleName = User::ROLE_USER)
     {
         // @TODO send mail
 
-        return $this->createUser($request);
-    }
+        $user = $this->createUser($name, $email, $password);
 
-    public function createByAdmin(AdminRegisterRequest $request)
-    {
-        $this->createByAdmin($request);
+        $this->userRoleService->attachToUser($roleName, $user);
+
+        return $user;
     }
 
     /**
@@ -49,17 +64,18 @@ class AuthService
     }
 
     /**
-     * @param RegisterRequest $request
-     * @param string $role
+     * @param string $name
+     * @param string $email
+     * @param string $password
      *
      * @return User
      */
-    private function createUser(RegisterRequest $request, string $role = User::ROLE_USER): User
+    private function createUser(string $name, string $email, string $password): User
     {
         return User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($password),
         ]);
     }
 }

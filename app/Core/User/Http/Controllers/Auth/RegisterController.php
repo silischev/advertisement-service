@@ -31,7 +31,9 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $user = $this->authService->register($request);
+        $data = $request->validated();
+
+        $user = $this->authService->register($data['name'], $data['email'], $data['password']);
 
         $this->guard()->login($user);
 

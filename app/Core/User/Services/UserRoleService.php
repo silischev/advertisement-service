@@ -2,6 +2,7 @@
 
 namespace App\Core\User\Services;
 
+use App\Core\User\Models\User;
 use Spatie\Permission\Models\Role;
 
 class UserRoleService
@@ -26,13 +27,35 @@ class UserRoleService
         Role::findByName($name)->delete();
     }
 
-    public function attachToUser(int $userId, Role $role)
+    /**
+     * @param string $roleName
+     * @param User $user
+     *
+     * @return void
+     */
+    public function attachToUser(string $roleName, User $user): void
     {
-        // TODO
+        $user->assignRole(Role::findByName($roleName));
     }
 
-    public function detachFromUser(int $userId, Role $role)
+    /**
+     * @param string $roleName
+     * @param User $user
+     *
+     * @return void
+     */
+    public function detachFromUser(string $roleName, User $user): void
     {
-        // TODO
+        $user->removeRole(Role::findByName($roleName));
+    }
+
+    public function getRole(User $user)
+    {
+        return $user->getRoleNames()->first();
+    }
+
+    public function getRoles(User $user)
+    {
+        return $user->getRoleNames();
     }
 }
