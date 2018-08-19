@@ -11,8 +11,7 @@ class AlterCategoriesTable extends Migration
         Schema::table('categories', function (Blueprint $table) {
             $table->foreign('parent_id', 'parent_id_fk')
                 ->references('id')
-                ->on('categories')
-                ->onDelete('restrict');
+                ->on('categories');
         });
     }
 
