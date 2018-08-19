@@ -49,11 +49,21 @@ class UserRoleService
         $user->removeRole(Role::findByName($roleName));
     }
 
+    /**
+     * @param User $user
+     *
+     * @return string
+     */
     public function getRole(User $user)
     {
         return $user->getRoleNames()->first();
     }
 
+    /**
+     * @param User $user
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public function getRoles(User $user)
     {
         return $user->getRoleNames();
