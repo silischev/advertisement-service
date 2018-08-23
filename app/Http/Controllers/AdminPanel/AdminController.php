@@ -13,6 +13,6 @@ class AdminController extends Controller
 
     public function index()
     {
-        // @TODO
+        return view('admin.index');
     }
 }
