@@ -18,8 +18,9 @@ class CategoryController
 
     public function index()
     {
-        $this->categoryService->getCategoriesAsTree();
-        return view('categories.index');
+        $categories = $this->categoryService->getCategoriesAsSortedTree();
+
+        return view('categories.index', compact('categories'));
     }
 
 }
