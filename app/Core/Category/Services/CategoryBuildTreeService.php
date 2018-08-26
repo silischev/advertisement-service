@@ -47,14 +47,12 @@ class CategoryBuildTreeService
     {
         $childCategories = $this->getChild($parentId);
 
-        if (count($childCategories) === 0) {
-            return;
-        }
-
-        $level++;
-        foreach ($childCategories as $category) {
-            $sortedCategories[$category['id']] = $this->setLeaf($category['name'], $level);
-            $this->addBranch($category['id'], $level, $sortedCategories);
+        if (count($childCategories) > 0) {
+            $level++;
+            foreach ($childCategories as $category) {
+                $sortedCategories[$category['id']] = $this->setLeaf($category['name'], $level);
+                $this->addBranch($category['id'], $level, $sortedCategories);
+            }
         }
     }
 
