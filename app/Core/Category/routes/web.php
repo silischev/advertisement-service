@@ -1,8 +1,8 @@
 <?php
 
 Route::group([
-    'namespace' => 'AdminPanel',
     'prefix' => 'admin/categories',
+    'middleware' => 'can:admin-panel',
 ], function () {
-    Route::get('/', 'CategoryController@index')->name('index');
+    Route::get('/', 'CategoryController@index')->name('categories.index');
 });

@@ -15,8 +15,8 @@
                 </div>
 
                 <div class="list-group">
-                    <a href="{{ route() }}" class="list-group-item active">
-                        <span class="glyphicon glyphicon-tasks"></span> Categories <span class="badge">0</span>
+                    <a href="{{ route('categories.index') }}" class="list-group-item">
+                        <span class="glyphicon glyphicon-tasks"></span> Categories <span class="badge badge-primary">0</span>
                     </a>
                 </div>
             </div>
