@@ -2,6 +2,7 @@
 
 namespace App\Core\Category\Http\Controllers;
 
+use App\Core\Category\Models\Category;
 use App\Core\Category\Services\CategoryService;
 
 class CategoryController
@@ -18,9 +19,8 @@ class CategoryController
 
     public function index()
     {
-        $categories = $this->categoryService->getCategoriesAsSortedTree();
+        $categories = $this->categoryService->getAll();
 
         return view('categories.index', compact('categories'));
     }
-
 }
