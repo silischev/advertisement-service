@@ -2,7 +2,6 @@
 
 namespace App\Core\Category\Http\Controllers;
 
-use App\Core\Category\Models\Category;
 use App\Core\Category\Services\CategoryService;
 
 class CategoryController
