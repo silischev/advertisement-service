@@ -11,6 +11,8 @@ class AddColumnAdvertisements extends Migration
         Schema::table('advertisements', function ($table) {
             $table->string('address', 100);
             $table->string('phone', 100);
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('category_id');
         });
     }
 
@@ -19,6 +21,8 @@ class AddColumnAdvertisements extends Migration
         Schema::table('advertisements', function ($table) {
             $table->dropColumn('address');
             $table->dropColumn('phone');
+            $table->dropColumn('user_id');
+            $table->dropColumn('category_id');
         });
     }
 }
