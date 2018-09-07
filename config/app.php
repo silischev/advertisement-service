@@ -156,6 +156,7 @@ return [
          */
         App\Core\User\Providers\UserServiceProvider::class,
         App\Core\Category\Providers\CategoryServiceProvider::class,
+        App\Core\Advertisement\Providers\AdvertisementServiceProvider::class,
 
         /*
          * Application Service Providers...
