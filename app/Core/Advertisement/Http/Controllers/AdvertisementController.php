@@ -30,7 +30,8 @@ class AdvertisementController
 
     public function store(StoreRequest $request)
     {
-        $this->advertisementService->create($request);
+        $user = \Auth::user();
+        $this->advertisementService->create($user->id, $request);
 
         return route('advertisement.index');
     }

@@ -25,7 +25,7 @@ class AdvertisementTest extends TestCase
         $this->advertisementService = new AdvertisementService();
     }
 
-    public function testUserRegister()
+    public function testAdvertisementSuccessCreate()
     {
         $user = factory(User::class)->create();
         $category = factory(Category::class)->create();
@@ -34,7 +34,6 @@ class AdvertisementTest extends TestCase
             'title' => 'test_title',
             'price' => 123,
             'description' => 'test_description',
-            'user_id' => $user->id,
             'category_id' => $category->id,
             'address' => 'test_address',
             'phone' => '1234567',
@@ -43,12 +42,12 @@ class AdvertisementTest extends TestCase
         $request = new StoreRequest();
         $request->initialize([], $advertisementData);
 
-        $advertisement = $this->advertisementService->create($request);
+        $advertisement = $this->advertisementService->create($user->id, $request);
 
         $this->assertNotEmpty($advertisement);
 
-        $this->assertEquals($advertisementData['name'], $advertisement->name);
-        $this->assertEquals($advertisementData['user_id'], $advertisement->user_id);
+        $this->assertEquals($advertisementData['title'], $advertisement->title);
+        $this->assertEquals($user->id, $advertisement->user_id);
         $this->assertEquals($advertisementData['category_id'], $advertisement->category_id);
     }
 }

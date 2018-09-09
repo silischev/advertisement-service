@@ -18,7 +18,6 @@ class StoreRequest extends FormRequest
             'price' => 'required|integer',
             'description' => 'required|max:300',
             'category_id' => 'required|integer',
-            'user_id' => 'required|integer',
             'address' => 'required|string|max:50',
             'phone' => 'required|string|max:12',
             'images' => 'json',
