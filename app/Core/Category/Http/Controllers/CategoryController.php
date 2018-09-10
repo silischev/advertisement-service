@@ -22,4 +22,9 @@ class CategoryController
 
         return view('categories.index', compact('categories'));
     }
+
+    public function categoriesList()
+    {
+        return response()->json($this->categoryService->getAll());
+    }
 }

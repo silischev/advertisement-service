@@ -50,7 +50,7 @@ class CategoryBuildTreeService
         if (count($childCategories) > 0) {
             $level++;
             foreach ($childCategories as $category) {
-                $sortedCategories[$category['id']] = $this->setLeaf($category['name'], $level);
+                $sortedCategories[$category['id']] = $this->setLeaf($category['name'], $category['parent_id'], $level);
                 $this->addBranch($category['id'], $level, $sortedCategories);
             }
         }
@@ -74,11 +74,19 @@ class CategoryBuildTreeService
         return $childCategories;
     }
 
-    private function setLeaf(string $name, int $level = 0)
+    /**
+     * @param string $name
+     * @param int $parentId
+     * @param int $level
+     *
+     * @return array
+     */
+    private function setLeaf(string $name, int $parentId = 0, int $level = 0)
     {
         return [
             'name' => $name,
             'level' => $level,
+            'parent_id' => $parentId,
         ];
     }
 }
