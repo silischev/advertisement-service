@@ -6,9 +6,11 @@
                     <div class="card-header">Категории</div>
 
                     <div class="card-body">
-                        <ul class="list-group col-md-4" v-for="category in this.filteredCategoriesByParentId">
+                        <div>{{ activePath }}</div>
+
+                        <ul class="list-group col-md-4" v-for="category in filteredCategoriesByParentId">
                             <li class="list-group-item">
-                                <a href="#">{{ category.name }}</a>
+                                <a href="#" :data-parent="category.id" v-on:click="rebuildCategoriesList">{{ category.name }}</a>
                             </li>
                         </ul>
                     </div>
@@ -24,18 +26,28 @@
 
     export default {
         methods: {
+            rebuildCategoriesList: function (e) {
+                this.activeLevel = e.target.dataset.parent;
+
+                this.filteredCategoriesByParentId;
+            },
         },
         computed: {
             filteredCategoriesByParentId: function() {
                 let filteredCategories = [];
-                let activeLevel = this.activeLevel;
+                let activeLevel = this.activeLevel * 1;
 
                 $$.each(this.categories, function(category) {
-                    if (category.level === activeLevel) {
+                    if (category.parent_id === activeLevel) {
                         filteredCategories.push(category);
                     }
-                    //console.log(category.name);
                 });
+
+                if (filteredCategories.length === 0) {
+                    return this.activeCategories;
+                }
+
+                this.activeCategories = filteredCategories;
 
                 return filteredCategories;
             }
@@ -43,7 +55,9 @@
         data() {
             return {
                 categories: {},
+                activeCategories: {},
                 activeLevel: 0,
+                activePath: '',
             }
         },
         created() {
