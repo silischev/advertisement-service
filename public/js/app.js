@@ -47373,9 +47373,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     methods: {
         rebuildCategoriesList: function rebuildCategoriesList(e) {
-            this.activeLevel = e.target.dataset.parent;
+            this.activeLevel = e.target.dataset.parentId;
 
             this.filteredCategoriesByParentId;
+
+            if (this.hasChild) {
+                this.activePath += e.target.dataset.parentName + ' / ';
+            } else if (this.chosenCategory !== this.activeLevel) {
+                if (this.chosenCategory === 0) {
+                    this.activePath += e.target.dataset.parentName;
+                } else {
+                    var currentActivePath = this.activePath.split('/');
+
+                    currentActivePath.pop();
+                    this.activePath = currentActivePath.join(' / ') + ' / ' + e.target.dataset.parentName;
+                }
+
+                this.chosenCategory = this.activeLevel;
+            }
         }
     },
     computed: {
@@ -47390,9 +47405,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
 
             if (filteredCategories.length === 0) {
+                this.hasChild = false;
+
                 return this.activeCategories;
             }
 
+            this.hasChild = true;
             this.activeCategories = filteredCategories;
 
             return filteredCategories;
@@ -47403,7 +47421,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             categories: {},
             activeCategories: {},
             activeLevel: 0,
-            activePath: ''
+            activePath: '',
+            chosenCategory: 0,
+            hasChild: true
         };
     },
     created: function created() {
@@ -47442,7 +47462,11 @@ var render = function() {
                     _c(
                       "a",
                       {
-                        attrs: { href: "#", "data-parent": category.id },
+                        attrs: {
+                          href: "#",
+                          "data-parent-id": category.id,
+                          "data-parent-name": category.name
+                        },
                         on: { click: _vm.rebuildCategoriesList }
                       },
                       [_vm._v(_vm._s(category.name))]
