@@ -4,6 +4,9 @@
     <div class="container">
     </div>
     <div id="app">
-        <categories-component></categories-component>
+        <form action="#">
+            <input type="hidden" name="category" v-model="category">
+            <Categories v-on:setCategory="setCategory"></Categories>
+        </form>
     </div>
 @endsection

@@ -15,8 +15,16 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('categories-component', require('./components/advertisement/CategoriesComponent.vue'));
+Vue.component('Categories', require('./components/advertisement/Categories.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        category: '',
+    },
+    methods:{
+        setCategory: function(value){
+            this.category = value;
+        }
+    }
 });

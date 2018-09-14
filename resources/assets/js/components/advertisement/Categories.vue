@@ -45,6 +45,10 @@
 
                     this.chosenCategory = this.activeLevel;
                 }
+
+                if (this.chosenCategory !== 0) {
+                    this.$emit('setcategory', this.chosenCategory);
+                }
             },
         },
         computed: {
