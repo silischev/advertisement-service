@@ -6,5 +6,5 @@ Route::group([
 ], function () {
     Route::get('/', 'AdvertisementController@index')->name('advertisements.index');
     Route::get('/create', 'AdvertisementController@create')->name('advertisements.create');
-    Route::get('/store', 'AdvertisementController@create')->name('advertisements.store');
+    Route::post('/store', 'AdvertisementController@store')->name('advertisements.store');
 });

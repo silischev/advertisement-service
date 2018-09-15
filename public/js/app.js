@@ -47550,6 +47550,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
 //
 //
 //
@@ -47593,19 +47595,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            category: ''
+            category: '',
+            errors: []
         };
     },
 
     methods: {
         setCategory: function setCategory(value) {
             this.category = value;
+        },
+        submit: function submit(e) {
+            e.preventDefault();
+
+            var data = new FormData(document.getElementById('form'));
+            var errors = [];
+
+            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/advertisements/store', data).then(function (response) {}).catch(function (error) {
+                var errorsData = error.response.data.errors;
+
+                __WEBPACK_IMPORTED_MODULE_1_lodash__["each"](errorsData, function (error) {
+                    errors.push(error[0]);
+                });
+            });
+
+            this.errors = errors;
         }
     }
 });
@@ -47624,7 +47649,7 @@ var render = function() {
     [
       _c("Categories", { on: { setCategory: _vm.setCategory } }),
       _vm._v(" "),
-      _c("form", { attrs: { enctype: "multipart/form-data" } }, [
+      _c("form", { attrs: { id: "form", enctype: "multipart/form-data" } }, [
         _c("input", {
           directives: [
             {
@@ -47634,7 +47659,7 @@ var render = function() {
               expression: "category"
             }
           ],
-          attrs: { type: "hidden", name: "category" },
+          attrs: { type: "hidden", name: "category_id" },
           domProps: { value: _vm.category },
           on: {
             input: function($event) {
@@ -47660,11 +47685,28 @@ var render = function() {
           "button",
           {
             staticClass: "btn btn-primary pull-right",
-            attrs: { type: "submit" }
+            attrs: { type: "submit" },
+            on: { click: _vm.submit }
           },
           [_vm._v("Отправить")]
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticStyle: { clear: "both", "padding-top": "10px" } },
+        _vm._l(_vm.errors, function(error) {
+          return _vm.errors
+            ? _c("ul", { staticClass: "list-group list-group-flush" }, [
+                _c(
+                  "li",
+                  { staticClass: "list-group-item list-group-item-danger" },
+                  [_vm._v(_vm._s(error))]
+                )
+              ])
+            : _vm._e()
+        })
+      )
     ],
     1
   )
