@@ -1,21 +1,15 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card card-default">
-                    <div class="card-header">Категории</div>
+    <div class="card card-default">
+        <div class="card-header">Категории</div>
 
-                    <div class="card-body">
-                        <div>{{ activePath }}</div>
+        <div class="card-body">
+            <div>{{ activePath }}</div>
 
-                        <ul class="list-group col-md-4" v-for="category in filteredCategoriesByParentId">
-                            <li class="list-group-item">
-                                <a href="#" :data-parent-id="category.id" :data-parent-name="category.name" v-on:click="rebuildCategoriesList">{{ category.name }}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <ul class="list-group col-md-4" v-for="category in filteredCategoriesByParentId">
+                <li class="list-group-item">
+                    <a href="#" :data-parent-id="category.id" :data-parent-name="category.name" v-on:click="rebuildCategoriesList">{{ category.name }}</a>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
