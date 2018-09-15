@@ -16,15 +16,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('Categories', require('./components/advertisement/Categories.vue'));
+Vue.component('FormCreate', require('./components/advertisement/FormCreate'));
 
 const app = new Vue({
     el: '#app',
-    data: {
-        category: '',
-    },
-    methods:{
-        setCategory: function(value){
-            this.category = value;
-        }
-    }
 });

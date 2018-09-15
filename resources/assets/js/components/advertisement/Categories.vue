@@ -41,7 +41,7 @@
                 }
 
                 if (this.chosenCategory !== 0) {
-                    this.$emit('setcategory', this.chosenCategory);
+                    this.$emit('setCategory', this.chosenCategory);
                 }
             },
         },
