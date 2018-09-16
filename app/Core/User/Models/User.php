@@ -2,6 +2,7 @@
 
 namespace App\Core\User\Models;
 
+use App\Core\Advertisement\Models\Advertisement;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -40,4 +41,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function advertisements()
+    {
+        return $this->hasMany(Advertisement::class);
+    }
 }

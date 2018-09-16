@@ -21,8 +21,13 @@ class AdvertisementController
 
     public function index()
     {
+        // @TODO
+    }
+
+    public function userAdvertisements()
+    {
         $user = \Auth::user();
-        $advertisements = $this->advertisementService->getByUser($user->id);
+        $advertisements = $this->advertisementService->getByUser($user);
 
         return new AdvertisementCollection(new Advertisement($advertisements));
     }

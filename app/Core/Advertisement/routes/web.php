@@ -2,9 +2,15 @@
 
 Route::group([
     'prefix' => 'advertisements',
-    'middleware' => 'auth',
 ], function () {
     Route::get('/', 'AdvertisementController@index')->name('advertisements.index');
-    Route::get('/create', 'AdvertisementController@create')->name('advertisements.create');
-    Route::post('/store', 'AdvertisementController@store')->name('advertisements.store');
+    Route::get('/user-advertisements', 'AdvertisementController@userAdvertisements')
+        ->middleware('auth')
+        ->name('advertisements.user-advertisements');
+    Route::get('/create', 'AdvertisementController@create')
+        ->middleware('auth')
+        ->name('advertisements.create');
+    Route::post('/store', 'AdvertisementController@store')
+        ->middleware('auth')
+        ->name('advertisements.store');
 });
