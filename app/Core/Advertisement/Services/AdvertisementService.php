@@ -4,6 +4,8 @@ namespace App\Core\Advertisement\Services;
 
 use App\Core\Advertisement\Models\Advertisement;
 use App\Core\Advertisement\Requests\StoreRequest;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class AdvertisementService
 {
@@ -26,5 +28,16 @@ class AdvertisementService
         ]);
 
         return $advertisement;
+    }
+
+    /**
+     * @param int $id
+     * @param int $limit
+     *
+     * @return LengthAwarePaginator
+     */
+    public function getByUser(int $id, int $limit = 5)
+    {
+        return Advertisement::where('user_id', $id)->paginate($limit);
     }
 }

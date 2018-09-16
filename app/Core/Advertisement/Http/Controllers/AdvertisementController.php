@@ -2,6 +2,8 @@
 
 namespace App\Core\Advertisement\Http\Controllers;
 
+use App\Core\Advertisement\Http\Resources\Advertisement;
+use App\Core\Advertisement\Http\Resources\AdvertisementCollection;
 use App\Core\Advertisement\Requests\StoreRequest;
 use App\Core\Advertisement\Services\AdvertisementService;
 
@@ -19,8 +21,10 @@ class AdvertisementController
 
     public function index()
     {
-        // @TODO
-        return view('advertisements.index');
+        $user = \Auth::user();
+        $advertisements = $this->advertisementService->getByUser($user->id);
+
+        return new AdvertisementCollection(new Advertisement($advertisements));
     }
 
     public function create()
