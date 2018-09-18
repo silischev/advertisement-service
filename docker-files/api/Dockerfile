@@ -26,6 +26,7 @@ RUN add-apt-repository -y ppa:ondrej/php \
         php7.2-xml \
         php7.2-zip \
         php7.2-gd \
+        php7.2-bcmath \
         curl \
         git \
         htop \
