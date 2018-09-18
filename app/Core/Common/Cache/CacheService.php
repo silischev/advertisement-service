@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\System\Cache;
+namespace App\Core\Common\Cache;
 
 use Illuminate\Contracts\Cache\Repository;
 

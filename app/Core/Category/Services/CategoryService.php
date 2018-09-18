@@ -3,7 +3,7 @@
 namespace App\Core\Category\Services;
 
 use App\Core\Category\Models\Category;
-use App\Core\System\Cache\CacheService;
+use App\Core\Common\Cache\CacheService;
 
 class CategoryService
 {
