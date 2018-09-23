@@ -51,12 +51,9 @@ class AuthService
         $user = $this->createUser($name, $email, $password);
         $this->userRoleService->attachToUser($roleName, $user);
 
-        $message = (new UserRegister())
-            ->onQueue('mails');
-
         $this->mailer
             ->to($user)
-            ->queue($message);
+            ->queue((new UserRegister())->onQueue('mails'));
 
         return $user;
     }
