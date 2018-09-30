@@ -2,15 +2,11 @@
 
 namespace App\Core\User\Services;
 
-use App\Core\Common\Jobs\SendEmail;
-use App\Core\User\Http\Requests\Auth\AdminRegisterRequest;
+use App\Core\User\Events\UserRegister;
 use App\Core\User\Http\Requests\Auth\LoginRequest;
 use App\Core\User\Models\User;
-use App\Mail\UserRegister;
-use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class AuthService
 {
@@ -22,20 +18,13 @@ class AuthService
     private $userRoleService;
 
     /**
-     * @var Mailer
-     */
-    private $mailer;
-
-    /**
      * AuthService constructor.
      *
      * @param UserRoleService $userRoleService
-     * @param Mailer $mailer
      */
-    public function __construct(UserRoleService $userRoleService, Mailer $mailer)
+    public function __construct(UserRoleService $userRoleService)
     {
         $this->userRoleService = $userRoleService;
-        $this->mailer = $mailer;
     }
 
     /**
@@ -51,9 +40,7 @@ class AuthService
         $user = $this->createUser($name, $email, $password);
         $this->userRoleService->attachToUser($roleName, $user);
 
-        $this->mailer
-            ->to($user)
-            ->queue((new UserRegister())->onQueue('mails'));
+        event(new UserRegister($user));
 
         return $user;
     }

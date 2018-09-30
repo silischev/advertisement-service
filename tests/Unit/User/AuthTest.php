@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\User;
 
+use App\Core\User\Events\UserRegister;
 use App\Core\User\Http\Requests\Auth\RegisterRequest;
 use App\Core\User\Models\User;
 use App\Core\User\Services\AuthService;
@@ -43,6 +44,7 @@ class AuthTest extends TestCase
         $request = new RegisterRequest();
         $request->initialize([], $userData);
 
+        $this->expectsEvents(UserRegister::class);
         $user = $this->authService->register($userData['name'], $userData['email'], $userData['password']);
 
         $this->assertNotEmpty($user);
