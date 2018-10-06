@@ -8,16 +8,16 @@ class CreateCategoriesAttributesTable extends Migration
 {
     public function up()
     {
-        Schema::create('categories_attributes', function (Blueprint $table) {
+        Schema::create('attributes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('category_id');
             $table->enum('type', ['text', 'list', 'images']);
-            $table->json('data');
+            $table->string('title', 30);
+            $table->json('options');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('categories_attributes');
+        Schema::dropIfExists('attributes');
     }
 }

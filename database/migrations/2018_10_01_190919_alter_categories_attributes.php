@@ -13,6 +13,11 @@ class AlterCategoriesAttributes extends Migration
                 ->references('id')
                 ->on('categories')
                 ->onDelete('cascade');
+
+            $table->foreign('attribute_id', 'attribute_id_attributes_fk')
+                ->references('id')
+                ->on('attributes')
+                ->onDelete('cascade');
         });
     }
 
@@ -20,6 +25,7 @@ class AlterCategoriesAttributes extends Migration
     {
         Schema::table('categories_attributes', function (Blueprint $table) {
             $table->dropForeign('category_id_attributes_fk');
+            $table->dropForeign('attribute_id_attributes_fk');
         });
     }
 }
