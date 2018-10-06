@@ -2,15 +2,25 @@
 
 namespace App\Core\Category\Http\Controllers;
 
+use App\Core\Category\Services\AttributeService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 class AttributeController extends Controller
 {
+    /**
+     * @var AttributeService
+     */
+    private $attributeService;
+
+    public function __construct(AttributeService $attributeService)
+    {
+        $this->attributeService = $attributeService;
+    }
 
     public function index()
     {
-        // @TODO
+        return response()->json($this->attributeService->getAll());
     }
 
 

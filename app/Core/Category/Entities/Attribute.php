@@ -4,25 +4,31 @@ namespace App\Core\Category\Entities;
 
 abstract class Attribute
 {
-    const TYPE_TEXT = 'text';
-    const TYPE_LIST = 'list';
-    const TYPE_IMAGE = 'image';
+    /**
+     * @var string
+     */
+    protected $value;
 
     /**
      * @var string
      */
-    private $label;
+    protected $viewPath;
 
     /**
      * @var array
      */
-    private $value;
+    protected $options;
 
-    /**
-     * @var array
-     */
-    private $metadata;
+    protected function getView(): string
+    {
+        return str_replace('.', '/', $this->viewPath);
+    }
 
-    abstract protected function setType(string $type);
-
+    protected function setOptions()
+    {
+        $this->options = [
+            'view' => $this->viewPath,
+            'value' => $this->value,
+        ];
+    }
 }
