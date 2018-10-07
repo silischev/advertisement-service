@@ -19,6 +19,9 @@ abstract class Attribute
      */
     protected $options;
 
+    /**
+     * @return string
+     */
     protected function getView(): string
     {
         return str_replace('.', '/', $this->viewPath);

@@ -20,7 +20,17 @@ class AttributeController extends Controller
 
     public function index()
     {
-        return response()->json($this->attributeService->getAll());
+        $types = $this->attributeService->getTypes();
+
+        return view('attributes.index', compact('types'));
+    }
+
+    public function attributesByType(Request $request)
+    {
+        $attributeType = $request->type;
+        $attributes = $this->attributeService->getByType($attributeType);
+
+        return view('attributes.byType', compact('attributes'));
     }
 
 
