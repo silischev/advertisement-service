@@ -7,7 +7,10 @@
             $options = json_decode($attribute->options);
         @endphp
         <label>{{ $attribute->title }}</label>
-        @include ($options->view)
+        @include ($options->view, [
+            'name' => $options->name,
+            'variants' => $options->variants ?? null,
+        ])
     @endforeach
 </div>
 @endsection

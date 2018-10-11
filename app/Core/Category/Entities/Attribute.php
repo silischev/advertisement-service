@@ -15,9 +15,24 @@ abstract class Attribute
     protected $viewPath;
 
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
      * @var array
      */
     protected $options;
+
+    /**
+     * Attribute constructor.
+     *
+     * @param string $viewPath
+     */
+    public function __construct(string $viewPath)
+    {
+        $this->viewPath = $viewPath;
+    }
 
     /**
      * @return string
@@ -31,6 +46,7 @@ abstract class Attribute
     {
         $this->options = [
             'view' => $this->viewPath,
+            'name' => $this->name,
             'value' => $this->value,
         ];
     }

@@ -1,1 +1,1 @@
-<input type="text" class="form-control" name="basic" value="">
+<input type="text" class="form-control" name="{{ $name }}" value="">
