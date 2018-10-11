@@ -30,7 +30,7 @@ class AttributeController extends Controller
         $attributeType = $request->type;
         $attributes = $this->attributeService->getByType($attributeType);
 
-        return view('attributes.byType', compact('attributes'));
+        return view('attributes.view_by_type', compact('attributes'));
     }
 
 
