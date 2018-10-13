@@ -2,6 +2,8 @@
 
 @section('content')
 <div class="container">
+    {{ Breadcrumbs::render('categories.by_parent', $parent) }}
+
     @foreach ($categories as $category)
         <h5>
             <a href="{{ route('categories.by_parent', ['parent_id' => $category['id']]) }}" class="badge badge-pill badge-primary">{{ $category['name'] }}</a>

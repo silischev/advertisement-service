@@ -28,9 +28,10 @@ class CategoryController
      */
     public function index(int $parentId = null)
     {
+        //$ancestors = !empty($parentId) ? $this->categoryService->getAncestors($parentId) : null;
         $categories = $this->categoryService->getByParent($parentId);
 
-        return view('categories.main', compact('categories'));
+        return view('categories.main', compact('categories', 'parent'));
     }
 
     /**

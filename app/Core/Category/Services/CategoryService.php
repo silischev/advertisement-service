@@ -53,4 +53,9 @@ class CategoryService
             ->get()
             ->toArray();
     }
+
+    public function getById(int $id)
+    {
+        return Category::findOrfail($id);
+    }
 }
