@@ -11,11 +11,21 @@ class CategoryController
      */
     private $categoryService;
 
+    /**
+     * CategoryController constructor.
+     *
+     * @param CategoryService $categoryService
+     */
     public function __construct(CategoryService $categoryService)
     {
         $this->categoryService = $categoryService;
     }
 
+    /**
+     * @param int|null $parentId
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(int $parentId = null)
     {
         $categories = $this->categoryService->getByParent($parentId);
@@ -23,6 +33,11 @@ class CategoryController
         return view('categories.main', compact('categories'));
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     *
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
     public function categoriesList()
     {
         return response()->json($this->categoryService->getAll());
