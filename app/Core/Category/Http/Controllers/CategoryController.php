@@ -16,11 +16,11 @@ class CategoryController
         $this->categoryService = $categoryService;
     }
 
-    public function index()
+    public function index(int $parentId = null)
     {
-        $categories = $this->categoryService->getAll();
+        $categories = $this->categoryService->getByParent($parentId);
 
-        return view('categories.index', compact('categories'));
+        return view('categories.main', compact('categories'));
     }
 
     public function categoriesList()

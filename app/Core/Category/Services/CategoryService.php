@@ -41,4 +41,11 @@ class CategoryService
 
         return (new CategoryBuildTreeService($categories))->getAsSortedTree();
     }
+
+    public function getByParent(int $parentId = null)
+    {
+        return Category::where('parent_id', $parentId)
+            ->get()
+            ->toArray();
+    }
 }
