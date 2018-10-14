@@ -5,13 +5,31 @@ namespace App\Core\Category\Services;
 class CategoryBuildTreeService
 {
     /**
-     * @var array
+     * Return an array of ancestors sorted in ascending order
+     *
+     * @param int $categoryId
+     * @param array $categories
+     *
+     * @return array
      */
-    private $allCategories;
-
-    public function __construct(array $allCategories)
+    public function getAncestors(int $categoryId, array $categories)
     {
-        $this->allCategories = $allCategories;
+        $ancestors = [];
+        $currentCategory = $categories[$categoryId];
+        $level = $currentCategory['level'];
+
+        $ancestors[$level] = $currentCategory;
+
+        while (!empty($level)) {
+            $parent = $categories[$currentCategory['parent_id']];
+            $level = $parent['level'];
+            $ancestors[$level] = $parent;
+            $currentCategory = $parent;
+        }
+
+        ksort($ancestors);
+
+        return $ancestors;
     }
 
     /**
@@ -22,16 +40,18 @@ class CategoryBuildTreeService
      *      '3' => ['name' => 'C', 'level' => 1],
      *      '4' => ['name' => 'D', 'level' => 0], // Parent
      *
+     * @param array $allCategories
+     *
      * @return array
      */
-    public function getAsSortedTree()
+    public function getAsSortedTree(array $allCategories)
     {
         $sortedCategories = [];
 
-        foreach ($this->allCategories as $category) {
+        foreach ($allCategories as $category) {
             if (empty($category['parent_id'])) {
                 $sortedCategories[$category['id']] = $this->setLeaf($category['id'], $category['name']);
-                $this->addBranch($category['id'], 0, $sortedCategories);
+                $this->addBranch($category['id'], 0, $sortedCategories, $allCategories);
             }
         }
 
@@ -43,29 +63,30 @@ class CategoryBuildTreeService
      * @param int $level
      * @param array $sortedCategories
      */
-    private function addBranch(int $parentId, int $level, array &$sortedCategories)
+    private function addBranch(int $parentId, int $level, array &$sortedCategories, array $allCategories)
     {
-        $childCategories = $this->getChild($parentId);
+        $childCategories = $this->getChild($parentId, $allCategories);
 
         if (count($childCategories) > 0) {
             $level++;
             foreach ($childCategories as $category) {
                 $sortedCategories[$category['id']] = $this->setLeaf($category['id'], $category['name'], $category['parent_id'], $level);
-                $this->addBranch($category['id'], $level, $sortedCategories);
+                $this->addBranch($category['id'], $level, $sortedCategories, $allCategories);
             }
         }
     }
 
     /**
      * @param int $parentId
+     * @param array $categories
      *
      * @return array
      */
-    private function getChild(int $parentId)
+    private function getChild(int $parentId, array $categories)
     {
         $childCategories = [];
 
-        foreach ($this->allCategories as $category) {
+        foreach ($categories as $category) {
             if ($category['parent_id'] === $parentId) {
                 $childCategories[] = $category;
             }

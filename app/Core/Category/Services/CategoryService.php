@@ -13,13 +13,20 @@ class CategoryService
     private $cacheService;
 
     /**
+     * @var CategoryBuildTreeService
+     */
+    private $treeService;
+
+    /**
      * CategoryService constructor.
      *
+     * @param CategoryBuildTreeService $treeService
      * @param CacheService $cacheService
      */
-    public function __construct(CacheService $cacheService)
+    public function __construct(CategoryBuildTreeService $treeService, CacheService $cacheService)
     {
         $this->cacheService = $cacheService;
+        $this->treeService = $treeService;
     }
 
     /**
@@ -39,7 +46,7 @@ class CategoryService
             $this->cacheService->set('categories.list', $categories);
         }
 
-        return (new CategoryBuildTreeService($categories))->getAsSortedTree();
+        return $this->treeService->getAsSortedTree($categories);
     }
 
     /**
@@ -57,5 +64,19 @@ class CategoryService
     public function getById(int $id)
     {
         return Category::findOrfail($id);
+    }
+
+    public function getCategoryAncestors(int $categoryId)
+    {
+        $ancestors = $this->cacheService->get('categories.ancestors.' . $categoryId);
+
+        if (empty($ancestors)) {
+            $sortedCategories = $this->getAll();
+            $ancestors = $this->treeService->getAncestors($categoryId, $sortedCategories);
+
+            $this->cacheService->set('categories.ancestors.' . $categoryId, $ancestors);
+        }
+
+        return $ancestors;
     }
 }
