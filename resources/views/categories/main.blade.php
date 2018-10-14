@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    {{ Breadcrumbs::render('categories.by_parent', $parent) }}
+    {{ Breadcrumbs::render('categories.by_parent', $ancestors) }}
 
     @foreach ($categories as $category)
         <h5>
